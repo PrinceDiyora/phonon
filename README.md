@@ -7,6 +7,9 @@
 - Team Members: `Prince Diyora`
 - College Name: `CSPIT,Charusat`
 
+## Live Link
+Live Link - https://phonon-six.vercel.app
+
 ## Demo Link
 Video link - https://drive.google.com/drive/folders/1jKLUr2RZyEdYLE_RuqJ7ab1po3Zqcmbe 
 
