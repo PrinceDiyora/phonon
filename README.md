@@ -3,9 +3,12 @@
 **22North Product Engineering Challenge 2026 — Challenge 6: Enterprise Security & Compliance**
 
 ## Team
-- Team Name: `<fill in>`
-- Team Members: `<fill in>`
-- College Name: `<fill in>`
+- Team Name: `Team Coders`
+- Team Members: `Prince Diyora`
+- College Name: `CSPIT,Charusat`
+
+## Demo Link
+Video link - https://drive.google.com/drive/folders/1jKLUr2RZyEdYLE_RuqJ7ab1po3Zqcmbe 
 
 ## Problem
 An Enterprise SaaS company is preparing for SOC 2 Type II certification while complying with
@@ -19,20 +22,29 @@ ComplianceHub gives a compliance/security team a single place to:
 - **Audit Evidence** — submit evidence against a control and run it through an approve/reject reviewer workflow
 - **Privacy Obligations** — track DPDP-specific obligations (consent, retention, breach notification, data subject requests) with due dates and status
 - **Dashboard** — a live compliance readiness view: open risk count, % control readiness, pending evidence reviews, overdue privacy obligations, and upcoming deadlines
+- **Activity Log / Audit Trail** — automatic tracking of all creates, updates, and deletes across the system
+- **Compliance Reports** — one-click export of the compliance snapshot to CSV or a printable PDF-ready report
 
-## Scope decisions & assumptions
-- Authentication is mocked entirely (per challenge constraints) — no login system; the app assumes a single internal compliance-team user.
-- Compliance frameworks are simplified to two: SOC 2 (Security / Availability / Confidentiality) and DPDP Act — real SOC 2 has dozens of trust-service-criteria sub-controls, we modeled a representative subset.
-- File evidence upload is simulated with a filename/description field rather than real file storage, to keep the 48-hour scope realistic.
-- We prioritized workflows (risk → control → evidence linkage, and the evidence review cycle) over UI chrome, per the "focus on workflows" constraint, but still invested in a clean dashboard since it's the most demo-visible screen.
+## Default Credentials & Roles
+Since authentication is mocked for this MVP per challenge constraints, there is no real login page. Instead, the application uses a client-side simulated role-switcher (located at the bottom of the left navigation menu). 
+
+**Available Dummy Roles:**
+- **Compliance Admin:** Default role. Full edit access to add, edit, delete, and change the status of all records.
+- **Auditor (Read-only):** Read-only view of all data. Forms, delete buttons, and edit actions are hidden or disabled.
+
+*Note: In a production environment, you would log in with real credentials (e.g., admin@compliancehub.local / password123) and these roles would be strictly enforced by the backend.*
+
+## Assumptions & Known Limitations
+- **Mocked Auth:** Authentication is mocked entirely. The UI role switcher is client-side only; backend endpoints currently accept all requests without checking tokens.
+- **Simplified Frameworks:** Frameworks are simplified to SOC 2 (Security/Availability/Confidentiality) and the DPDP Act. Real implementations have dozens of sub-controls.
+- **Evidence Uploads:** File evidence upload is simulated with a filename text field rather than real blob storage (like S3), to keep the MVP scope realistic.
+- **Overdue Logic:** Overdue status for obligations is calculated dynamically on-the-fly when reading from the database rather than mutated by a background cron job.
 
 ## Future enhancements (given more time)
-- Real authentication with role-based access (Compliance Admin vs. Control Owner vs. Auditor/Reviewer)
-- Actual file upload/storage (S3) for audit evidence with versioning
-- Automated control-to-evidence expiry reminders and email notifications
-- Framework template library (import a full SOC 2 Trust Services Criteria control set)
-- Audit trail / activity log for every status change (who changed what, when) — required for real SOC 2 audits
-- Export readiness report as PDF for auditors
+- Real authentication (JWT/OAuth) with server-side role-based access control (RBAC).
+- Actual file upload/storage (S3) for audit evidence with versioning.
+- Automated control-to-evidence expiry reminders and email notifications.
+- Framework template library (import a full SOC 2 Trust Services Criteria control set).
 
 ## Tech Stack
 - **Backend:** Node.js, Express, MongoDB (Mongoose)
@@ -112,10 +124,3 @@ npm run dev                 # starts React app on http://localhost:5173
 
 Open **http://localhost:5173** — the dashboard should load with seeded data.
 
-## Demo Script (suggested, ~5 minutes)
-1. Open the **Dashboard** — show the live readiness numbers and charts (open risks, control readiness %, pending evidence, overdue obligations).
-2. Go to **Risk Register** — show a Critical risk (e.g. "Unrestricted admin access"), change its status to "Mitigating," and point out the linked controls.
-3. Go to **Controls** — filter by "DPDP Act," show a control in "Gap" status, mark it "In Progress."
-4. Go to **Audit Evidence** — submit new evidence against a control, then approve it as a reviewer.
-5. Go to **Privacy Obligations** — show an overdue obligation and explain the DPDP 72-hour breach notification requirement it maps to.
-6. Return to **Dashboard** — show the numbers have updated live, tying the story together.
